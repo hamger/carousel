@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>carousel-js</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+    }
+    
+    body {
+        padding: 20px;
+    }
+    
+    #container {
+        height: 400px;
+        width: 600px;
+        border: 3px solid #999;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    #picpicList {
+        position: absolute;
+        width: 4200px;
+        height: 400px;
+        z-index: 1;
+    }
+    
+    #picpicList img {
+        height: 400px;
+        width: 600px;
+        z-index: 1;
+        float: left;
+    }
+    
+    .arrow {
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        z-index: 2;
+        position: absolute;
+        top: 180px;
+        display: none;
+        background-color: rgba(0, 0, 0, .3);
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 40px;
+        color: #fff;
+        text-align: center;
+    }
+    
+    #prev {
+        left: 20px;
+    }
+    
+    #next {
+        right: 20px;
+    }
+    
+    #container:hover .arrow {
+        display: block;
+    }
+    
+    .arrow:hover {
+        background-color: rgba(0, 0, 0, .7);
+    }
+    
+    #buttons {
+        position: absolute;
+        height: 22px;
+        width: 110px;
+        left: 245px;
+        bottom: 20px;
+        z-index: 2;
+    }
+    
+    #buttons span {
+        cursor: pointer;
+        display: block;
+        float: left;
+        height: 10px;
+        width: 10px;
+        margin: 5px;
+        border: 1px solid #FFF;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+    }
+    
+    #buttons .on {
+        background: #FF9900;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        var container = document.getElementById('container');
+        var picList = document.getElementById('picpicList');
+        var buttons = document.getElementById('buttons').getElementsByTagName('span');
+        var buttons = document.getElementsByTagName('span');
+        var prev = document.getElementById('prev');
+        var next = document.getElementById('next');
+        var index = 1;
+        var animating = false;
+        var timer;
+
+        //控制图片变化函数
+        function animate(offset) {
+            if (offset == 0) {
+                return;
+            }
+            animating = true;
+            var time = 300; //运动总时间
+            var inteval = 10; //单位运动时间
+            var speed = offset / (time / inteval); //单位位移
+            var left = parseInt(picList.style.left) + offset;
+            var go = function() {
+                if (parseInt(picList.style.left) != left) {
+                    picList.style.left = parseInt(picList.style.left) + speed + 'px';
+                    setTimeout(go, inteval);
+                } else {
+                    picList.style.left = left + 'px';
+                    if (left > -600) {
+                        picList.style.left = '-3000px';
+                    }
+                    if (left < -3000) {
+                        picList.style.left = '-600px';
+                    }
+                    animating = false;
+                }
+            }
+            go();
+        }
+        //控制按钮变化函数
+        function showButton() {
+            for (var i = 0; i < buttons.length; i++) {
+                if (buttons[i].className == 'on') {
+                    buttons[i].className = '';
+                    break;
+                }
+            }
+            buttons[index - 1].className = 'on';
+        }
+        //绑定onclick事件
+        prev.onclick = function() {
+            if (animating) {
+                return;
+            }
+            if (index == 1) {
+                index = 5;
+            } else {
+                index -= 1;
+            }
+            animate(600);
+            showButton();
+        }
+        next.onclick = function() {
+            if (animating) {
+                return;
+            }
+            if (index == 5) {
+                index = 1;
+            } else {
+                index += 1;
+            }
+            animate(-600);
+            showButton();
+        }
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].onclick = function() {
+                if (animating) {
+                    return;
+                }
+                if (this.className == 'on') {
+                    return;
+                }
+                var myIndex = parseInt(this.getAttribute('index'));
+                var offset = -600 * (myIndex - index);
+                animate(offset);
+                index = myIndex;
+                showButton();
+
+            }
+        }
+
+        function play() {
+            timer = setInterval(function() {
+                next.onclick();
+            }, 3000);
+        }
+
+        function stop() {
+            clearInterval(timer);
+        }
+        container.onmouseover = stop;
+        container.onmouseout = play;
+
+        play();
+
+    }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="picpicList" style="left:-600px">
+            <img src="images/bizhi5.jpg" alt="1" index="5">
+            <img src="images/bizhi1.jpg" alt="1" index="1">
+            <img src="images/bizhi2.jpg" alt="2" index="2">
+            <img src="images/bizhi3.jpg" alt="3" index="3">
+            <img src="images/bizhi4.jpg" alt="4" index="4">
+            <img src="images/bizhi5.jpg" alt="5" index="5">
+            <img src="images/bizhi1.jpg" alt="5" index="1">
+        </div>
+        <div id="buttons">
+            <span index="1" class='on'></span>
+            <span index="2"></span>
+            <span index="3"></span>
+            <span index="4"></span>
+            <span index="5"></span>
+        </div>
+        <a href="#" id="prev" class="arrow">&lt;</a>
+        <a href="#" id="next" class="arrow">&gt;</a>
+    </div>
+</body>
+
+</html>
