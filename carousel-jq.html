@@ -94,6 +94,29 @@
         background: #FF9900;
     }
     </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="picList" style="left:-600px">
+            <img src="images/bizhi5.jpg" alt="1" index="5">
+            <img src="images/bizhi1.jpg" alt="1" index="1">
+            <img src="images/bizhi2.jpg" alt="2" index="2">
+            <img src="images/bizhi3.jpg" alt="3" index="3">
+            <img src="images/bizhi4.jpg" alt="4" index="4">
+            <img src="images/bizhi5.jpg" alt="5" index="5">
+            <img src="images/bizhi1.jpg" alt="5" index="1">
+        </div>
+        <div id="buttons">
+            <span index="1" class='on'></span>
+            <span index="2"></span>
+            <span index="3"></span>
+            <span index="4"></span>
+            <span index="5"></span>
+        </div>
+        <a href="#" id="prev" class="arrow">&lt;</a>
+        <a href="#" id="next" class="arrow">&gt;</a>
+    </div>
     <script src="jquery-3.0.0.min.js"></script>
     <script>
     $(function() {
@@ -180,29 +203,6 @@
         play();
     });
     </script>
-</head>
-
-<body>
-    <div id="container">
-        <div id="picList" style="left:-600px">
-            <img src="images/bizhi5.jpg" alt="1" index="5">
-            <img src="images/bizhi1.jpg" alt="1" index="1">
-            <img src="images/bizhi2.jpg" alt="2" index="2">
-            <img src="images/bizhi3.jpg" alt="3" index="3">
-            <img src="images/bizhi4.jpg" alt="4" index="4">
-            <img src="images/bizhi5.jpg" alt="5" index="5">
-            <img src="images/bizhi1.jpg" alt="5" index="1">
-        </div>
-        <div id="buttons">
-            <span index="1" class='on'></span>
-            <span index="2"></span>
-            <span index="3"></span>
-            <span index="4"></span>
-            <span index="5"></span>
-        </div>
-        <a href="#" id="prev" class="arrow">&lt;</a>
-        <a href="#" id="next" class="arrow">&gt;</a>
-    </div>
 </body>
 
 </html>
