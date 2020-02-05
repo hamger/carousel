@@ -190,7 +190,7 @@
                 if (picList.is(":animated") || $(this).attr('class') == 'on'){
                     return;
                 }
-                var myIndex = parseInt($(this).arrt('index'));
+                var myIndex = parseInt($(this).attr('index'));
                 var offset = -600 * (myIndex - index);
                 animate(offset);
                 index = myIndex;
